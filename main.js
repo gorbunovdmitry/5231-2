@@ -40,7 +40,15 @@ function renderLanding() {
       </div>
     </div>
   `;
-  document.getElementById('sendBtn').onclick = renderPlaceholder;
+  document.getElementById('sendBtn').onclick = function() {
+    // Устанавливаем флаг, что заглушка активна
+    localStorage.setItem('stub_shown', '1');
+    // Заменяем текущую запись в истории, чтобы нельзя было вернуться назад
+    history.replaceState(null, '', location.href);
+    renderPlaceholder();
+  };
+  // Восстанавливаем фон для первой страницы
+  document.body.style.background = '';
 }
 
 function renderPlaceholder() {
@@ -53,6 +61,16 @@ function renderPlaceholder() {
       </div>
     </div>
   `;
+  // Делаем фон белым только для заглушки
+  document.body.style.background = '#fff';
 }
 
-renderLanding(); 
+// При загрузке страницы проверяем флаг
+if (localStorage.getItem('stub_shown')) {
+  // Сразу показываем заглушку и белый фон
+  renderPlaceholder();
+  // Заменяем историю, чтобы нельзя было вернуться назад
+  history.replaceState(null, '', location.href);
+} else {
+  renderLanding();
+} 

@@ -126,17 +126,20 @@ body {
 /* Заглушка */
 .placeholder {
   min-height: 100vh;
-  background: #bdbdbd;
+  /* background: #bdbdbd; */
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  text-align: center;
+  text-align: left;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 .placeholder__img {
   width: 220px;
   max-width: 60vw;
   margin-bottom: 32px;
+  align-self: center;
 }
 .placeholder__title {
   font-size: 2rem;
