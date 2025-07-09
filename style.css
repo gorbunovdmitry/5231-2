@@ -141,16 +141,28 @@ body {
   margin-bottom: 32px;
   align-self: center;
 }
-.placeholder__title {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 18px;
-}
+.placeholder__title,
 .placeholder__desc {
-  font-size: 1.1rem;
-  color: #222;
-  max-width: 90vw;
-  margin: 0 auto;
+  text-align: left;
+  padding-left: 16px;
+  padding-right: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.landing__title,
+.landing__desc,
+.landing__params,
+.landing__docs,
+.landing__param-label,
+.landing__param-value,
+.landing__list,
+.landing__faq {
+  text-align: left;
+  padding-left: 16px;
+  padding-right: 16px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (max-width: 480px) {
