@@ -1,6 +1,11 @@
 const app = document.getElementById('app');
 
 function renderLanding() {
+  // Если уже была заглушка, не показываем лендинг
+  if (localStorage.getItem('placeholderShown') === '1') {
+    renderPlaceholder();
+    return;
+  }
   app.innerHTML = `
     <div class="landing">
       <img src="img/calendar.png" alt="Календарь" class="landing__img" />
@@ -27,7 +32,7 @@ function renderLanding() {
               <div class="landing__param-value">Бесплатно, если не пользоваться</div>
             </div>
             <div>
-              <div class="landing__param-label">Каждое использовние</div>
+              <div class="landing__param-label">С каждого использования</div>
               <div class="landing__param-value">249 ₽ за каждый раз</div>
             </div>
           </div>
@@ -40,15 +45,7 @@ function renderLanding() {
       </div>
     </div>
   `;
-  document.getElementById('sendBtn').onclick = function() {
-    // Устанавливаем флаг, что заглушка активна
-    localStorage.setItem('stub_shown', '1');
-    // Заменяем текущую запись в истории, чтобы нельзя было вернуться назад
-    history.replaceState(null, '', location.href);
-    renderPlaceholder();
-  };
-  // Восстанавливаем фон для первой страницы
-  document.body.style.background = '';
+  document.getElementById('sendBtn').onclick = renderPlaceholder;
 }
 
 function renderPlaceholder() {
@@ -61,16 +58,8 @@ function renderPlaceholder() {
       </div>
     </div>
   `;
-  // Делаем фон белым только для заглушки
-  document.body.style.background = '#fff';
+  // Очищаем историю, чтобы нельзя было вернуться назад
+  history.replaceState(null, '', location.href);
 }
 
-// При загрузке страницы проверяем флаг
-if (localStorage.getItem('stub_shown')) {
-  // Сразу показываем заглушку и белый фон
-  renderPlaceholder();
-  // Заменяем историю, чтобы нельзя было вернуться назад
-  history.replaceState(null, '', location.href);
-} else {
-  renderLanding();
-} 
+renderLanding(); 
