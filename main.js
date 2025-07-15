@@ -1,5 +1,18 @@
 const app = document.getElementById('app');
 
+function sendGtagEventOnce(eventName) {
+  // Отправляет событие gtag только один раз за сессию
+  try {
+    if (!window.sessionStorage) return;
+    var key = 'gtag_sent_' + eventName;
+    if (sessionStorage.getItem(key)) return;
+    if (typeof gtag === 'function') {
+      gtag('event', eventName);
+      sessionStorage.setItem(key, '1');
+    }
+  } catch (e) {}
+}
+
 function renderLanding() {
   // Если уже была заглушка, не показываем лендинг
   if (localStorage.getItem('placeholderShown') === '1') {
@@ -46,6 +59,8 @@ function renderLanding() {
     </div>
   `;
   document.getElementById('sendBtn').onclick = renderPlaceholder;
+  // Событие просмотра экрана с условиями рассрочки (только один раз за сессию)
+  sendGtagEventOnce('5231_page_view_zkd_var2');
 }
 
 function renderPlaceholder() {
@@ -60,6 +75,8 @@ function renderPlaceholder() {
   `;
   // Очищаем историю, чтобы нельзя было вернуться назад
   history.replaceState(null, '', location.href);
+  // Событие просмотра финальной страницы (только один раз за сессию)
+  sendGtagEventOnce('5231_end_page_view_zkd_var2');
 }
 
 renderLanding(); 
